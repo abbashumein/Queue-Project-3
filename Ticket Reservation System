@@ -1,0 +1,33 @@
+class Ticket:
+    def __init__(self, ticket_id, movie):
+        self.id = ticket_id
+        self.movie = movie
+        self.is_available = True  # Not used in this implementation
+
+
+class Seat:
+    def __init__(self, seat_number):
+        self.number = seat_number
+        self.is_available = True
+
+
+class Customer:
+    def __init__(self, customer_id):
+        self.id = customer_id
+
+
+def reserve_ticket(queue, seats, customer):
+    if queue and any(seat.is_available for seat in seats):
+        customer_obj = queue.pop(0)  # Get the first customer
+        for seat in seats:
+            if seat.is_available:
+                seat.is_available = False
+                print(f"Ticket {customer_obj.id} (Customer {customer_obj.id}) has been reserved for seat {seat.number}")
+                break
+
+
+queue = [Customer("Customer1"), Customer("Customer2")]
+seats = [Seat("Seat1"), Seat("Seat2")]
+
+while queue:
+    reserve_ticket(queue, seats, queue)  # Use customer list directly
